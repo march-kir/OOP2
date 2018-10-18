@@ -2,6 +2,8 @@ package com.gmail.kirillmarch6;
 
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
 public class Student extends Person implements Comparable {
 
 	private int studentID;
@@ -43,16 +45,10 @@ public class Student extends Person implements Comparable {
 			 return -1;
 			 }
 		 Student tmp = (Student)obj;
-		 if(this.getStudentID() < tmp.getStudentID())
-         {
-           return -1;
-         }   
-         else if(this.getStudentID() > tmp.getStudentID())
-         {
-           return 1;
-         }
-         return 0;  
+		 return this.getSurname().compareToIgnoreCase(tmp.getSurname());
 	}
 	
+
+
 
 }

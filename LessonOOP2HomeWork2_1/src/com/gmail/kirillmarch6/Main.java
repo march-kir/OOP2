@@ -30,50 +30,57 @@ public class Main {
 		group.addStudent(studentNine);
 		group.addStudent(studentTen);
 		group.addStudent(studentElleven);
-		
+
 		System.out.println();
-		
+
 		group.getInformation();
 		System.out.println();
-		
+
 		System.out.println("Поиск студентов");
 		group.searchStudent("Morozuk");
 		group.searchStudent("Golovin");
 		System.out.println();
-			
+
 		System.out.println("Удаление студента");
 		group.deleteStudent(studentSeven);
 		System.out.println();
 		group.getInformation();
-		
+
 		System.out.println();
 		System.out.println("Интерактивное добавление студента");
 		group.interactiveAddingStudent();
 		System.out.println();
 		group.getInformation();
-		
+
 		System.out.println();
 		System.out.println("Военнообязанные студенты");
-		Student[] voen = new Student[10];
+		Student[] voen = new Student[] {};
 		voen = group.getStudnetsForVoenkom();
+		voen = group.arrWithoutNull(voen); // получаем массив без null в конце
 		for (int i = 0; i < voen.length; i++) {
-			if (voen[i]!= null) {
 			System.out.println(voen[i].getInformation());
-			}
 		}
-		
-		System.out.println();
-		System.out.println("Сортировка");
-		Student[] sortArray = new Student[9];
-		sortArray = group.getGroup();	
-		for (int i = 0; i < sortArray.length; i++) {
-			if (sortArray[i]!= null) {
-			System.out.println(sortArray[i].getInformation());
-			}
-		}
-		Arrays.sort(sortArray);
 
-		
+		System.out.println();
+		System.out.println("Сортировка по фамилии");
+		Student[] sortArray = new Student[] {};
+		sortArray = group.getGroup(); // заполняем массив всеми студентами
+		sortArray = group.arrWithoutNull(sortArray); // получаем массив без null в конце
+
+		Arrays.sort(sortArray);
+		for (int i = 0; i < sortArray.length; i++) {
+			System.out.println(sortArray[i].getInformation());
+		}
+
+		System.out.println();
+		System.out.println("Сортировка по параметру");
+		sortArray = group.getInteractiveSortArray();
+		if (sortArray != null) {
+			for (int i = 0; i < sortArray.length; i++) {
+				System.out.println(sortArray[i].getInformation());
+			}
+		}
+
 	}
 
 }
