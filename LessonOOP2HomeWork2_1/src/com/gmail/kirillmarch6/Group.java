@@ -131,16 +131,15 @@ public class Group implements Voenkom {
 		return sortList;
 	}
 
-	public void searchStudent(String findStudnent) {// поиск студента по фамилии
+	public Student searchStudent(String findStudnent) {// поиск студента по фамилии
+		Student searchStudent = null;
 		for (int i = 0; i < group.length; i++) {
 			if (findStudnent.equals(group[i].getSurname())) {
-				System.out.println("Найден студент " + group[i].getInformation());
+				searchStudent = group[i];
 				break;
 			}
-			if (i == group.length - 1) {
-				System.out.println("По вашему запросу ничего не найдено");
-			}
 		}
+		return searchStudent;
 	}
 
 	public void getInformation() { // вывод информации о студенте
@@ -165,11 +164,10 @@ public class Group implements Voenkom {
 				}
 			}
 		}
-
-		return year18men;
+		return arrWithoutNull(year18men);
 	}
 
-	public Student[] getInteractiveSortArray() { //интерактивная сортировка с параметром
+	public Student[] getInteractiveSortArray() { // интерактивная сортировка с параметром
 		Student[] sortArray = new Student[] {};
 		sortArray = arrWithoutNull(group); // получаем массив без null в конце
 		boolean goodParametr = true;
@@ -184,78 +182,65 @@ public class Group implements Voenkom {
 			JOptionPane.showMessageDialog(null, "Ничего не было введено или нажата отмена!");
 			return null;
 		}
-		if (parametr.equals("surname")) {
-			Arrays.sort(sortArray, new Comparator<Student>() {
-				public int compare(Student a, Student b) {
-					return a.getSurname().compareToIgnoreCase(b.getSurname());
-				}
-			});
+		if (parametr.equals("surname") || parametr.equals("name") || parametr.equals("patronymic")) {
+			getInteractiveSortArrayString(sortArray, parametr);
 			goodParametr = false;
 		}
-		if (parametr.equals("name")) {
-			Arrays.sort(sortArray, new Comparator<Student>() {
-				public int compare(Student a, Student b) {
-					return a.getName().compareToIgnoreCase(b.getName());
-				}
-			});
+		if (parametr.equals("age") || parametr.equals("studentID") || parametr.equals("numberRecordBook")) {
+			getInteractiveSortArrayInt(sortArray, parametr);
 			goodParametr = false;
 		}
-		if (parametr.equals("patronymic")) {
-			Arrays.sort(sortArray, new Comparator<Student>() {
-				public int compare(Student a, Student b) {
-					return a.getPatronymic().compareToIgnoreCase(b.getPatronymic());
-				}
-			});
-			goodParametr = false;
-		}
-		if (parametr.equals("age")) {
-			Arrays.sort(sortArray, new Comparator<Student>() {
-				public int compare(Student a, Student b) {
-					if (a.getAge() < b.getAge()) {
-						return 1;
-					}
-					if (a.getAge() > b.getAge()) {
-						return -1;
-					}
-					return 0;
-				}
-			});
-			goodParametr = false;
-		}
-		if (parametr.equals("studentID")) {
-			Arrays.sort(sortArray, new Comparator<Student>() {
-				public int compare(Student a, Student b) {
-					if (a.getStudentID() < b.getStudentID()) {
-						return 1;
-					}
-					if (a.getStudentID() > b.getStudentID()) {
-						return -1;
-					}
-					return 0;
-				}
-			});
-			goodParametr = false;
-		}
-		if (parametr.equals("numberRecordBook")) {
-			Arrays.sort(sortArray, new Comparator<Student>() {
-				public int compare(Student a, Student b) {
-					if (a.getNumberRecordBook() < b.getNumberRecordBook()) {
-						return 1;
-					}
-					if (a.getNumberRecordBook() > b.getNumberRecordBook()) {
-						return -1;
-					}
-					return 0;
-				}
-			});
-			goodParametr = false;
-		}
-		if (goodParametr = false) {
+		if (goodParametr == false) {
 			return sortArray;
 		} else {
 			System.out.println("Неверный параметр!");
 			return null;
 		}
+	}
+
+	public Student[] getInteractiveSortArrayString(Student[] sortArray, String parametr) {
+		Arrays.sort(sortArray, new Comparator<Student>() {
+			public int compare(Student a, Student b) {
+				if (parametr.equals("surname")) {
+					return a.getSurname().compareToIgnoreCase(b.getSurname());
+				} else if (parametr.equals("name")) {
+					return a.getName().compareToIgnoreCase(b.getName());
+				} else if (parametr.equals("patronymic")) {
+					return a.getPatronymic().compareToIgnoreCase(b.getPatronymic());
+				} else {
+					return 0;
+				}
+
+			}
+		});
+		return sortArray;
+	}
+
+	public Student[] getInteractiveSortArrayInt(Student[] sortArray, String parametr) {
+		Arrays.sort(sortArray, new Comparator<Student>() {
+			public int compare(Student a, Student b) {
+				if (parametr.equals("numberRecordBook") && a.getNumberRecordBook() < b.getNumberRecordBook()) {
+					return 1;
+				}
+				if (parametr.equals("numberRecordBook") && a.getNumberRecordBook() > b.getNumberRecordBook()) {
+					return -1;
+				}
+				if (parametr.equals("studentID") && a.getStudentID() < b.getStudentID()) {
+					return 1;
+				}
+				if (parametr.equals("studentID") && a.getStudentID() > b.getStudentID()) {
+					return -1;
+				}
+				if (parametr.equals("age") && a.getAge() < b.getAge()) {
+					return 1;
+				}
+				if (parametr.equals("age") && a.getAge() > b.getAge()) {
+					return -1;
+				}
+				return 0;
+			}
+		});
+		return sortArray;
 	}
 
 }

@@ -37,8 +37,12 @@ public class Main {
 		System.out.println();
 
 		System.out.println("Поиск студентов");
-		group.searchStudent("Morozuk");
-		group.searchStudent("Golovin");
+		try {
+			System.out.println(group.searchStudent("Morozuk").getInformation());
+			System.out.println(group.searchStudent("Golovin").getInformation());
+		} catch (NullPointerException e) {
+			System.out.println("По вашему запросу ничего не найдено");
+		}
 		System.out.println();
 
 		System.out.println("Удаление студента");
